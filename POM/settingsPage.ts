@@ -1,6 +1,6 @@
 import type { Page, Locator } from '@playwright/test';
 
-export class ProjectPage {
+export class SettingsPage {
   readonly page: Page;
   readonly projectSettings: Locator;
   readonly projectMoreBtn: Locator;
@@ -11,8 +11,12 @@ export class ProjectPage {
 
   constructor(page: Page) {
     this.page = page
-    this.projectSettings = page.locator('text=automated new projectDone-Base words-Team1Keys0AppsInstall appsEditorUploadScree >> [aria-label="Settings"]');
-    this.projectMoreBtn = page.locator('text=automated new projectDone-Base words-Team1Keys0AppsInstall appsEditorUploadScree >> [aria-label="More\\.\\.\\."]');
+    this.projectSettings = page.locator(
+      'text=automated new projectDone-Base words-Team1Keys0AppsInstall appsEditorUploadScree >> [aria-label="Settings"]'
+    );
+    this.projectMoreBtn = page.locator(
+      'text=More...EditorUploadScreenshotsGlossaryAppsSettingsDuplicate finderAutomationsAct >> [aria-label="More\\.\\.\\."]'
+    );
     this.projectNameField = page.locator('[placeholder="Project\\ name"]');
     this.deleteProjectBtn = page.locator('text=Delete project');
     this.projectNameDelete = page.locator('.bootbox-form .bootbox-input');
