@@ -26,8 +26,12 @@ export class LoginPage {
 
   async createProject() {
     await this.page.click('button:has-text("New project")')
-    await this.page.fill('[placeholder="MyApp\\ \\(iOS\\ \\+\\ Android\\ \\+\\ Web\\)"]', 'automated new project')
-    await this.page.fill('.Select__value-container.Select__value-container--is-multi', 'italian')
+    await this.page.fill(
+      '[placeholder="MyApp\\ \\(iOS\\ \\+\\ Android\\ \\+\\ Web\\)"]', 'automated new project'
+    )
+    await this.page.fill(
+      '.Select__value-container.Select__value-container--is-multi', 'italian'
+    )
     await this.page.keyboard.press('Enter')
   }
 }
