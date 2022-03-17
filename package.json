@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "playwright test --config=tests/playwright.config.js",
+    "headed:test": "npx playwright test --headed",
+    "debug:test": "npx playwright test --debug",
+    "headless:test": "npx playwright test"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

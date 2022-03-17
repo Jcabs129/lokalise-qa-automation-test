@@ -13,13 +13,15 @@ export class ProjectPage {
   readonly idNameDisplay: Locator;
   readonly keyNumText: Locator;
   readonly secondTransField: Locator;
-
   readonly enTranslationBtn: string;
   readonly secondTransBtn: string;
   readonly translationInput
   readonly saveTransBtn: string
   readonly itTranslationBtn: string
 
+
+  readonly keyEditorAdvancedTab: Locator
+  readonly pluralToggle: Locator
 
   constructor(page: Page) {
     this.page = page
@@ -38,11 +40,17 @@ export class ProjectPage {
     this.idNameDisplay = page.locator('text=uniqueId')
     this.keyNumText = page.locator('text=1 keys')
 
+
+    this.keyEditorAdvancedTab = page.locator("#advanced_tab")
+    this.pluralToggle = page.locator('div[class*="bootstrap-switch-id-theplural_switch"]')
+
+
     // key Translations locators
     this.enTranslationBtn = '[data-lang-id="640"] [class="highlight-wrapper"] div';
     this.translationInput = "textarea";
     this.saveTransBtn = 'button[class*="save"]'
     this.itTranslationBtn = 'div[data-rtl="0"] >> nth=1';
+
   }
 
   async navigatePage() {
@@ -68,6 +76,20 @@ export class ProjectPage {
     await this.saveKeyBtn.click()
   }
 
+  async fillKeyModalWithPlural() {
+    await this.addKeyBtn.click()
+    await this.keyIdField.fill('uniqueId')
+    await this.platformList.fill('web')
+    await this.page.keyboard.press('Enter');
+
+    await this.keyEditorAdvancedTab.click()
+    await this.pluralToggle.click()
+
+
+    // await this.selectWebPlatform.click()
+    await this.saveKeyBtn.click()
+  }
+
   async addFirstTranslation() {
     await this.inputTransField(
       this.enTranslationBtn,
@@ -75,7 +97,6 @@ export class ProjectPage {
       "Hello"
     );
     await this.page.waitForSelector("text=Hello", { state: "visible" })
-
   }
 
   async addSecondTranslation() {
