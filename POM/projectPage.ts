@@ -18,21 +18,26 @@ export class ProjectPage {
   readonly translationInput
   readonly saveTransBtn: string
   readonly itTranslationBtn: string
+  readonly pluralLabel: Locator
 
 
   readonly keyEditorAdvancedTab: Locator
   readonly pluralToggle: Locator
+  readonly firstPluralTransInput: string
+  readonly secondPluralTransInput
+  readonly enPluralTranslationBtn
+  readonly itPluralTranslationBtn
 
   constructor(page: Page) {
     this.page = page
     this.newProjBtn = page.locator('button:has-text("New project")');
-    this.projNameField = page.locator(
-      '[placeholder="MyApp\\ \\(iOS\\ \\+\\ Android\\ \\+\\ Web\\)"]'
-    );
+    this.projNameField = page.locator('[name="name"]');
     this.proceedBtn = page.locator('#tabs--1--panel--0 button:has-text("Proceed")');
 
+    this.pluralLabel = page.locator('span[class="label label-info edit-key cursor-pointer label-plural"]')
+
     // Key Editor Form
-    this.addKeyBtn = page.locator('[aria-label="Add\\ first\\ key"]');
+    this.addKeyBtn = page.locator('[aria-label="Add first key"]');
     this.keyIdField = page.locator('[placeholder="Give\\ the\\ key\\ a\\ unique\\ ID"]');
     this.platformList = page.locator('#s2id_autogen6');
     this.selectWebPlatform = page.locator('div[role="opt3ion"]:has-text("Web")');
@@ -40,16 +45,19 @@ export class ProjectPage {
     this.idNameDisplay = page.locator('text=uniqueId')
     this.keyNumText = page.locator('text=1 keys')
 
-
-    this.keyEditorAdvancedTab = page.locator("#advanced_tab")
-    this.pluralToggle = page.locator('div[class*="bootstrap-switch-id-theplural_switch"]')
-
-
     // key Translations locators
     this.enTranslationBtn = '[data-lang-id="640"] [class="highlight-wrapper"] div';
     this.translationInput = "textarea";
     this.saveTransBtn = 'button[class*="save"]'
     this.itTranslationBtn = 'div[data-rtl="0"] >> nth=1';
+
+    // Plural locators
+    this.keyEditorAdvancedTab = page.locator("#advanced_tab")
+    this.pluralToggle = page.locator('div[class*="bootstrap-switch-id-theplural_switch"]')
+    this.firstPluralTransInput = '[data-lokalise-editor-plural="one"] textarea'
+    this.secondPluralTransInput = '[data-lokalise-editor-plural="other"] textarea'
+    this.enPluralTranslationBtn = 'span[class="lokalise-popup-wrapper"]'
+    this.itPluralTranslationBtn = 'span[class="empty"]'
 
   }
 
@@ -72,7 +80,6 @@ export class ProjectPage {
     await this.keyIdField.fill('uniqueId')
     await this.platformList.fill('web')
     await this.page.keyboard.press('Enter');
-    // await this.selectWebPlatform.click()
     await this.saveKeyBtn.click()
   }
 
@@ -106,6 +113,24 @@ export class ProjectPage {
       "Ciao"
     );
     await this.page.waitForSelector("text=Ciao", { state: "visible" });
+  }
+
+  async addFirstPluralTrans() {
+    await this.inputTransField(
+      this.enPluralTranslationBtn,
+      this.firstPluralTransInput,
+      "Child"
+    );
+    await this.page.waitForSelector("text=Child", { state: "visible" })
+  }
+
+  async addSecondPluralTrans() {
+    await this.inputTransField(
+      this.itPluralTranslationBtn,
+      this.secondPluralTransInput,
+      "Bambine"
+    );
+    await this.page.waitForSelector("text=Bambine", { state: "visible" });
   }
 
   async inputTransField(
