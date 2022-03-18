@@ -37,6 +37,22 @@ test.describe('Case1 - add first project', () => {
 
   })
 
+  test('case 5 - Add translation for plural key', async ({ page }) => {
+    const projectPage = new ProjectPage(page)
+
+    // add a new project
+    await projectPage.createProject()
+
+    // Case 5: Add translation for plural key
+    await projectPage.fillKeyModalWithPlural()
+    await expect(projectPage.pluralLabel).toBeVisible()
+
+    // Add Translations
+    await projectPage.addFirstPluralTrans()
+    await projectPage.addSecondPluralTrans()
+
+  })
+
   // test.afterEach(async ({ page }) => {
   //   const settingsPage = new SettingsPage(page)
 
